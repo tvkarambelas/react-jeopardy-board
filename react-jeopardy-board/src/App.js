@@ -72,6 +72,8 @@ function JeopardyBoard() {
 
         <ActiveClue clueData={activeClue} handleActiveClue={handleActiveClue} />
       </div>  
+
+      <button onClick={e => setSelectedClues([])}>Reset Board</button>
     </>
   )
 }
