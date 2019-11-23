@@ -70,9 +70,17 @@ function JeopardyBoard() {
 }
 
 function Clue({ clueData, handleActiveClue }) {
+  const [clueSelected, setClueSelected] = useState(false)
+
+  function activateClue(e) {
+    e.preventDefault();
+    setClueSelected(true)
+    handleActiveClue(e,clueData)
+  }
+
   return (
     <>
-      <button className="clue" onClick={e => handleActiveClue(e,clueData)}>
+      <button className="clue" disabled={clueSelected} onClick={e => activateClue(e,clueData)}>
         <div className="value">${clueData.value}</div>
 
         <div className="details">

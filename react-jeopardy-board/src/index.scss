@@ -48,6 +48,18 @@ h1,h2,h3,h4,h5 {
           padding: 0.25rem;
           border: 0.25rem solid #FFCC00;
         }
+
+        &:disabled {
+          .value {
+            visibility: hidden;
+          }
+
+          &:hover {
+            padding: 0.5rem;
+            border: 0;
+            cursor: default;
+          }
+        }
   
         .details {
           display: none;
