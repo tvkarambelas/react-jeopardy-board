@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 function JeopardyBoard() {
   const [cluesData, setCluesData] = useState('')
   const [activeClue, setActiveClue] = useState('')
+  const [selectedClues, setSelectedClues] = useState([])
 
   useEffect(() => {
     async function getCluesData() {
@@ -41,6 +42,12 @@ function JeopardyBoard() {
   function handleActiveClue(e, clueData) {
     e.preventDefault();
     setActiveClue(clueData);
+
+    if (clueData != null) {
+      const updateSelectedClues = selectedClues
+      updateSelectedClues.push(clueData.id)
+      setSelectedClues(updateSelectedClues)
+    }
   }
   
   return (
@@ -55,7 +62,7 @@ function JeopardyBoard() {
                 <div className="title">{catData.title}</div>
 
                 {catData.clues.slice(0,5).map(clueData => (
-                  <Clue key={clueData.id} clueData={clueData} handleActiveClue={handleActiveClue} />
+                  <Clue key={clueData.id} clueData={clueData} handleActiveClue={handleActiveClue} selectedClue={selectedClues.includes(clueData.id)} />
                 ))}
               </div>
             )) 
@@ -69,18 +76,10 @@ function JeopardyBoard() {
   )
 }
 
-function Clue({ clueData, handleActiveClue }) {
-  const [clueSelected, setClueSelected] = useState(false)
-
-  function activateClue(e) {
-    e.preventDefault();
-    setClueSelected(true)
-    handleActiveClue(e,clueData)
-  }
-
+function Clue({ clueData, handleActiveClue, selectedClue }) {
   return (
     <>
-      <button className="clue" disabled={clueSelected} onClick={e => activateClue(e,clueData)}>
+      <button className="clue" disabled={selectedClue} onClick={e => handleActiveClue(e,clueData)}>
         <div className="value">${clueData.value}</div>
 
         <div className="details">
